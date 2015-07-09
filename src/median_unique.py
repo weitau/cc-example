@@ -1,11 +1,6 @@
 from sys import argv
 script, first_parm, second_parm = argv
 
-def xDupwords(words):
-    for a, b in zip(words, words[1:]) :
-        if a == b:
-            words.remove(b)
-    return words    
 
 inputfile = open(first_parm)
 outfile = open(second_parm, 'w')
