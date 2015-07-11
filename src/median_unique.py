@@ -5,13 +5,15 @@ script, first_parm, second_parm = argv
 inputfile = open(first_parm)
 outfile = open(second_parm, 'w')
 
+# function xDupwords removes the duplicate of two consective elements in a list
 def xDupwords(words):
     for a, b in zip(words, words[1:]) :
         if a == b:
             words.remove(b)
     return words    
 
-# function Medians finds the median element of an ORDERED list
+# function Median finds the median element of a list
+# regardless of the contents of the list
 def median(list):
     element_cnt = len(list)
     if element_cnt % 2 > 0 :
