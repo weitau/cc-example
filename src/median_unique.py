@@ -1,4 +1,5 @@
 from sys import argv
+from operator import mod
 script, first_parm, second_parm = argv
 
 inputfile = open(first_parm)
@@ -10,19 +11,28 @@ def xDupwords(words):
             words.remove(b)
     return words    
 
-line_cnt = 0.0      #counter of tweets read
-tweetword_cnt = 0   #count of unique words in tweet
-sum_words = 0.0     #running count of unique words found in tweets
+# function Medians finds the median element of an ORDERED list
+def median(list):
+    element_cnt = len(list)
+    if element_cnt % 2 > 0 :
+        return list[int(element_cnt/2+0.5)]
+    else:
+        return ( list[int(element_cnt/2)-1] + list[int(element_cnt/2)] ) / 2.0
+        
+    
+tweetword_cnt = 0   # count of unique words in tweet
+medians = []        # list of all the running medians
 
 for lines in inputfile:
-    if len(lines) > 1:   #ensure tweet has at least 1 character other than EOL
-        line_cnt += 1
+    if len(lines) > 1:              #ensure tweet has at least 1 character other than EOL
         listx = lines.split()
-        listx.sort()     #sort the words in the tweet for the next operation
-        xDupwords(listx) #remove consecutive repeating words
+        listx.sort()                #sort the words in the tweet for the next operation
+        xDupwords(listx)            #remove consecutive repeating words
         tweetword_cnt = len(listx)
-        sum_words = sum_words + tweetword_cnt
-        outfile.write(str("{:.2f}".format(sum_words/line_cnt)+"\n"))
+        medians.append(tweetword_cnt)
+        medians.sort()
+        outfile.write(str("{:.2f}".format(median(medians))+"\n"))   # return the median of list, and write to file
+        
     
 inputfile.close()
 outfile.close()
